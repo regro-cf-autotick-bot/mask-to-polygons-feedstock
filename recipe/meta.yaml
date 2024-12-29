@@ -7,27 +7,29 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/mask-to-polygons-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/mask-to-polygons-{{ version }}.tar.gz
   sha256: 97b2bc084b810e86314ffcd041c643004099dce660a0d2a8490c00925dc5f983
 
 build:
-  number: 0
+  number: 1
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
     - pip
-    - python >=3.6
+    - python {{ python_min }}
   run:
     - geojson
     - numpy
     - opencv
-    - python >=3.6
+    - python >={{ python_min }}
     - rasterio
     - shapely
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - mask_to_polygons
     - mask_to_polygons.processing
